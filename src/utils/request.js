@@ -3,17 +3,16 @@ import store from '@/store'
 
 import { Message } from 'element-ui'
 
-export const baseURL3 = 'http://localhost:8083'
-export const baseURL2 = 'http://localhost:8082'
-export const baseURL1 = 'http://localhost:8081'
-export const remote = 'http://173.82.193.76:8083'
-
 const request = axios.create({
-  baseURL: baseURL3,
   timeout: 12000,
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
+  },
+  proxy: {
+    protocol: 'https',
+    host: '127.0.0.1',
+    port: 9000,
   },
 })
 export const get = (url, params = {}) => {
@@ -120,16 +119,9 @@ request.interceptors.response.use(
   (response) => {
     const { code, message, data } = response.data
     //   要根据code决定下面的操作
-    if (code == 200 && data) {
-      return data
-    } else if (code == 200) {
-      return response.data
-    } else if (code == 500) {
-      return response.data
-    } else if (code == 10004) {
-      // 未能读取到有效Token，清空storage
-      window.localStorage.clear()
-      console.log('message', message)
+    if (code == 1) {
+      console.log(data)
+      return Promise.resolve(data)
     } else {
       return Promise.reject(new Error(message))
     }

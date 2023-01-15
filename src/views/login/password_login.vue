@@ -18,7 +18,7 @@
         size="medium"
         type="primary"
         round
-        native-type="submit"
+        @click="login()"
       >登录</el-button>
     </el-form>
   </div>
@@ -29,11 +29,17 @@ export default {
   data () {
     return {
       form: {
-        email: '',
-        password: ''
+        email: '1470918223@qq.com',
+        password: '123456789'
       }
     }
   },
+  methods: {
+    login () {
+      console.log(this.form);
+      this.$store.dispatch('loginByPassword', this.form)
+    },
+  }
 }
 </script>
 

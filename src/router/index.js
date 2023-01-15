@@ -23,6 +23,8 @@ const router = new VueRouter({
 router.beforeEach(async (to, from, next) => {
   if (vuex.state.login.token === '' && !routeWhiteList.includes(to.name)) {
     next({ name: 'LoginView' })
+  } else if (vuex.state.login.token !== '' && routeWhiteList.includes(to.name)) {
+    next({ name: 'HomeView' })
   } else next()
 })
 

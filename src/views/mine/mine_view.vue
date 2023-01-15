@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div>{{ message }}</div>
+    <div>
+      <el-button @click="logout()">退出登录</el-button>
+    </div>
     <TabBar></TabBar>
   </div>
 </template>
@@ -9,11 +11,16 @@ import TabBar from '@/components/global/tabbar.vue'
 export default {
   name: 'MineView',
   components: { TabBar },
-  data() {
+  data () {
     return {
       message: 'mine_view',
     }
   },
+  methods: {
+    logout () {
+      this.$store.dispatch('logout')
+    }
+  }
 }
 </script>
 

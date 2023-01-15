@@ -40,7 +40,7 @@
           size="medium"
           type="primary"
           round
-          native-type="submit"
+          @click="test"
         >重置密码</el-button>
       </el-form>
     </div>
@@ -61,6 +61,11 @@ export default {
       },
     }
   },
+  methods: {
+    test () {
+      console.log('12312312');
+    }
+  }
 }
 </script>
 

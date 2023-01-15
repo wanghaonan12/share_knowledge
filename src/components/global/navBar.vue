@@ -72,7 +72,6 @@ export default {
   },
   methods: {
     OnClickLeft () {
-      console.log('123123')
       if (this.to) {
         this.$router.push({ name: this.to })
       } else {

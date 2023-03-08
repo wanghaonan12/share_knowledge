@@ -7,6 +7,7 @@
   </div>
 </template>
 <script>
+
 import TabBar from '@/components/global/tabbar.vue'
 export default {
   name: 'MineView',

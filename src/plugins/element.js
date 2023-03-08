@@ -1,9 +1,11 @@
 import Vue from 'vue'
-import { Button, Input, Loading, MessageBox, Message, Form } from 'element-ui'
+import { Button, Input, Loading, MessageBox, Message, Form, Tabs, TabPane } from 'element-ui'
 
 Vue.use(Button)
 Vue.use(Input)
 Vue.use(Form)
+Vue.use(Tabs)
+Vue.use(TabPane)
 Vue.prototype.$loading = Loading.service
 Vue.prototype.$msgbox = MessageBox
 Vue.prototype.$alert = MessageBox.alert

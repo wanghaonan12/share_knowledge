@@ -117,13 +117,13 @@ request.interceptors.request.use(
 // 响应拦截器
 request.interceptors.response.use(
   (response) => {
-    const { code, message, data } = response.data
+    const { code, msg, data } = response.data
     //   要根据code决定下面的操作
     if (code == 1) {
       console.log(data)
       return Promise.resolve(data)
     } else {
-      return Promise.reject(new Error(message))
+      return Promise.reject(new Error(msg))
     }
   },
   (error) => {

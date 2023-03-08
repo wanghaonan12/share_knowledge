@@ -24,19 +24,19 @@ module.exports = {
   devServer: {
     /* 自动打开浏览器 */
     open: true,
+    port: 8066,
     /* 设置为0.0.0.0则所有的地址均能访问 */
     host: 'localhost',
-    port: 8066,
-    /* 使用代理 */
+    client: {
+      webSocketURL: 'ws://localhost:8083/ws',
+    },
     proxy: {
-      '/api': {
+      '/*': {
         /* 目标代理服务器地址 */
-        target: 'http://173.82.193.76:8083',
+        target: 'http://localhost:8083',
         /* 允许跨域 */
         changeOrigin: true,
-        pathRewrite: {
-          '^/api': '', //规定请求地址以什么作为开头
-        },
+        ws: false,
       },
     },
   },

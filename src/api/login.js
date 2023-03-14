@@ -2,10 +2,10 @@ import { get, post } from 'utils/request.js'
 import { USER } from '@/api/url_spllic'
 
 //地址
-export let loginUrl = USER + '/user/login'
-export let forgetPasswordApi = USER + '/user/forget'
-export let getVerApi = USER + '/user/verification'
-export let registerApi = USER + '/user/create'
+export let loginUrl = USER + 'user/login'
+export let forgetPasswordApi = USER + 'user/forget'
+export let getVerApi = USER + 'user/verification'
+export let registerApi = USER + 'user/create'
 
 /**
  * 获取验证码

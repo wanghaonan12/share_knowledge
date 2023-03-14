@@ -3,9 +3,9 @@ import { CONTENT } from '@/api/url_spllic'
 
 //地址
 export let getAllArticleApi = CONTENT + 'article/getAll'
-export let createArticleApi = CONTENT + '/article/createOrUpdate'
-export let createBrowsApi = CONTENT + '/brows/createOrUpdate'
-export let getArticleByTagApi = CONTENT + '/article/getByTagId'
+export let createArticleApi = CONTENT + 'article/createOrUpdate'
+export let createBrowsApi = CONTENT + 'brows/createOrUpdate'
+export let getArticleByTagApi = CONTENT + 'article/getByTagId'
 // export let createBrowsApi = CONTENT + '/brows/createOrUpdate'
 
 /**

@@ -2,9 +2,9 @@ import { del, get, post } from 'utils/request.js'
 import { CONTENT } from '@/api/url_spllic'
 
 //地址
-export let getTageAllApi = CONTENT + '/article_tage/get'
-export let createTageApi = CONTENT + '/article_tage/create'
-export let deleteTageApi = CONTENT + '/article_tage/delete/'
+export let getTageAllApi = CONTENT + 'article_tage/get'
+export let createTageApi = CONTENT + 'article_tage/create'
+export let deleteTageApi = CONTENT + 'article_tage/delete/'
 
 /**
  * 获取文章分类

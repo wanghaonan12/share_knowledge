@@ -9,11 +9,7 @@ const request = axios.create({
     'Content-Type': 'application/json',
     Accept: 'application/json',
   },
-  proxy: {
-    protocol: 'https',
-    host: '127.0.0.1',
-    port: 9000,
-  },
+    baseURL:'http://localhost:8083'
 })
 export const get = (url, params = {}) => {
   return new Promise((resolve, reject) => {

@@ -12,6 +12,5 @@ export default [
     path: '/ContentDetail',
     name: 'ContentDetail',
     component: () => import('@/views/home/content_detail.vue'),
-    meta: { transition: 'slide-left' },
   },
 ]

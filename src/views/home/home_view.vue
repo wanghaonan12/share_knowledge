@@ -27,18 +27,17 @@
         ></el-tab-pane>
       </el-tabs>
     </div>
-    <div>
-      <ShowCard
-        v-for="(data,index) in artticleData"
-        :key="index"
-        :title="data.title"
-        :accessory-url="data.accessoryUrl"
-        :article-tag-id="tageData[data.articleTagId].classify"
-        :create-time="data.createTime"
-        :price="data.price"
-        @click="goDetail"
-      ></ShowCard>
-    </div>
+    <ShowCard
+      v-for="(data,index) in artticleData"
+      :key="index"
+      :title="data.title"
+      :accessory-url="data.sendUserAvatar"
+      :article-tag-id="tageData[data.articleTagId].classify"
+      :create-time="data.createTime"
+      :price="data.praiseCount"
+      :article-id="data.id"
+      @click="goDetail()"
+    ></ShowCard>
 
     <TabBar></TabBar>
   </div>
@@ -47,7 +46,7 @@
 import TabBar from '@/components/global/tabbar.vue'
 import ShowCard from '@/components/showCard.vue'
 import { Icon as VanIcon } from 'vant';
-import { getAllArticle, getArticleByTag } from 'api/home'
+import { getAllArticle } from 'api/home'
 import { getTageAll } from 'api/tag'
 // import {}
 export default {
@@ -61,13 +60,9 @@ export default {
       contentData: {
         'pageNum': 1,
         'pageSize': 10,
-        'content': ''
+        'content': '',
+        'tab': ''
       },
-      searchByTag: {
-        'pageNum': 1,
-        'pageSize': 10,
-        'content': ''
-      }
     }
   },
   created () {
@@ -79,23 +74,20 @@ export default {
     // 标签点击事件
     handleClick (tab) {
       // 获取全部的index为0所以用if判断
+      this.contentData.content = '';
       if (tab.index == 0) {
         // 清除content数据防止多次调用时出现问题
-        this.contentData.content = '';
+        this.contentData.tab = '';
         this.getArticle();
       } else {
-        this.searchByTag.content = [tab.index]
-        getArticleByTag(this.searchByTag).then((res) => {
-          this.artticleData = res.records
-        }).catch((err) => {
-          this.$message.error(err)
-        })
+        this.contentData.tab = [tab.index][0]
+        this.getArticle()
       }
     },
     // 获取文章
     getArticle () {
       getAllArticle(this.contentData).then((res) => {
-        this.artticleData = res.records
+        this.artticleData = res.data
       }).catch((err) => {
         this.$message.error(err)
       })
@@ -115,10 +107,6 @@ export default {
         this.$message.error(err)
       })
     },
-    goDetail () {
-      console.log('1111');
-      this.$router.push('ContentDetial')
-    }
   }
 }
 </script>
@@ -132,9 +120,10 @@ export default {
 .box {
   padding: 0px 0px 5px 0px;
   background-color: #f3f3f3;
+  margin-bottom: 55px;
 }
 .search {
-  padding-top: 10px;
+  // padding-top: 10px;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -6,17 +6,17 @@
         <van-image round
                    width="50px"
                    height="50px"
-                   src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"></van-image>
+                   :src=avatarUrl></van-image>
       </div>
       <div class="box--content">
         <div class="box--content__nickname">
-          wangrich
+          {{avatar}}
         </div>
         <div class="box--content__comment">
-          牛皮牛皮牛皮牛皮牛皮牛皮牛皮牛皮牛皮牛皮牛皮牛皮牛皮牛皮牛皮牛皮
+          {{ content }}
         </div>
         <div class="box--content__data">
-          2022-2-10
+          {{dataTime}}
         </div>
       </div>
     </div>
@@ -30,6 +30,21 @@ import {Image as VanImage} from 'vant';
 export default {
   name: "AnswerBar",
   components: {VanImage},
+  props:{
+    avatarUrl:{
+      type:String,
+      default:"https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
+    },
+    content:{
+      type:String
+    },
+    nickname:{
+      type:String
+    },
+    dataTime:{
+      type:String
+    }
+  }
 }
 </script>
 

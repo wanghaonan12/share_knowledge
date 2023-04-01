@@ -8,6 +8,10 @@ import '@/assets/icons/iconfont.css'
 import './plugins/element.js'
 import preview from 'vue-photo-preview' //图片预览
 import 'vue-photo-preview/dist/skin.css' //图片预览样式
+import VueCoreVideoPlayer from 'vue-core-video-player' //视频播放组件
+import '@vant/touch-emulator' //vant屏幕适配
+
+Vue.use(VueCoreVideoPlayer)
 Vue.use(preview)
 Vue.use(ElementUI)
 

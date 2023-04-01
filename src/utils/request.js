@@ -1,6 +1,6 @@
 import axios from 'axios'
 import store from '@/store'
-
+import { BASEURL } from '@/api/url_spllic'
 import { Message } from 'element-ui'
 
 const request = axios.create({
@@ -9,7 +9,7 @@ const request = axios.create({
     'Content-Type': 'application/json',
     Accept: 'application/json',
   },
-    baseURL:'http://localhost:8083'
+  baseURL: BASEURL,
 })
 export const get = (url, params = {}) => {
   return new Promise((resolve, reject) => {
@@ -101,8 +101,8 @@ export const del = (url, data = {}) => {
 request.interceptors.request.use(
   (config) => {
     // 在这个位置需要统一的去注入token
-    if (store.getters.token) {
-      config.headers.set = { 'X-Token': store.getters.token }
+    if (store.state.login.token) {
+      config.headers['X-Token'] = store.state.login.token
     }
     return config // 必须返回配置
   },

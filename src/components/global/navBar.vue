@@ -91,6 +91,7 @@ export default {
   left: 0px;
   margin-bottom: 20px;
   width: 100%;
+  z-index: 999;
 }
 .leftIcon {
   font-size: 20px;

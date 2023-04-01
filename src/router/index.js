@@ -16,8 +16,9 @@ requireContext.keys().forEach((filename) => {
 })
 
 const router = new VueRouter({
+  mode: 'history',
+  base: '/',
   routes,
-  model: 'history',
 })
 
 //路由前置首位

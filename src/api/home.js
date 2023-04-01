@@ -1,13 +1,14 @@
-import { post } from 'utils/request.js'
+import { post, get } from 'utils/request.js'
 import { CONTENT } from '@/api/url_spllic'
 
 //地址
-export let getAllArticleApi = CONTENT + 'article/getAll'
+export let getAllArticleApi = CONTENT + 'article/findArticle'
 export let createArticleApi = CONTENT + 'article/createOrUpdate'
 export let createBrowsApi = CONTENT + 'brows/createOrUpdate'
 export let getArticleByTagApi = CONTENT + 'article/getByTagId'
+export let getArticleDetailApi = CONTENT + 'article/getDetail'
+export let createHistoryApi = CONTENT + 'brows/createOrUpdate'
 // export let createBrowsApi = CONTENT + '/brows/createOrUpdate'
-
 /**
  * 获取文章
  * @param {*} params
@@ -68,6 +69,39 @@ export const createBrows = (params) => {
 export const getArticleByTag = (params) => {
   return new Promise((resolve, reject) => {
     post(getArticleByTagApi, params)
+      .then((res) => {
+        resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+/**
+ * 根据文章id获取文章详情
+ * @param String
+ * @returns
+ */
+export const getArticleDetail = (params) => {
+  return new Promise((resolve, reject) => {
+    get(getArticleDetailApi, params)
+      .then((res) => {
+        resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+
+/**
+ * 根据文章id获取文章详情
+ * @param String
+ * @returns
+ */
+export const createHistory = (params) => {
+  return new Promise((resolve, reject) => {
+    get(createHistoryApi, params)
       .then((res) => {
         resolve(res)
       })

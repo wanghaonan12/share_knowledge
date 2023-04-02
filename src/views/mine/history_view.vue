@@ -1,12 +1,12 @@
 <!-- 历史记录列表 -->
 <template>
   <div class="box">
-    <navBar title=""></navBar>
+    <navBar title="浏览历史"></navBar>
     <ShowCard
       v-for="(data,index) in artticleData"
       :key="index"
       :title="data.title"
-      :accessory-url="data.sendUserAvatar"
+      :send-user-avatar="data.sendUserAvatar"
       :article-tag-id="tageData[data.articleTagId].classify"
       :create-time="data.createTime"
       :price="data.praiseCount"

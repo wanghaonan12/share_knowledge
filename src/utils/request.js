@@ -3,7 +3,7 @@ import store from '@/store'
 import { BASEURL } from '@/api/url_spllic'
 import { Message } from 'element-ui'
 
-const request = axios.create({
+export const request = axios.create({
   timeout: 12000,
   headers: {
     'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export const post = (url, data = {}) => {
       )
   })
 }
-export const postFile = (url, data = {}) => {
+export const postFile = (url, data) => {
   return new Promise((resolve, reject) => {
     request
       .post(url, data, {
@@ -129,4 +129,41 @@ request.interceptors.response.use(
     return Promise.reject(error)
   },
 )
+
+// 将参数转换成功 formdata 接收格式
+export const stringify = (data) => {
+  const formData = new FormData()
+  for (const key in data) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (data.hasOwnProperty(key)) {
+      if (data[key]) {
+        if (data[key].constructor === Array) {
+          if (data[key][0]) {
+            if (data[key][0].constructor === Object) {
+              formData.append(key, JSON.stringify(data[key]))
+            } else {
+              data[key].forEach((item, index) => {
+                formData.append(key + `[${index}]`, item)
+              })
+            }
+          } else {
+            formData.append(key + '[]', '')
+          }
+        } else if (data[key].constructor === Object) {
+          formData.append(key, JSON.stringify(data[key]))
+        } else {
+          formData.append(key, data[key])
+        }
+      } else {
+        if (data[key] === 0) {
+          formData.append(key, 0)
+        } else {
+          formData.append(key, '')
+        }
+      }
+    }
+  }
+  return formData
+}
+
 export default request

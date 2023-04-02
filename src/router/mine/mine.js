@@ -19,4 +19,9 @@ export default [
     name: 'HistoryView',
     component: () => import('@/views/mine/history_view'),
   },
+  {
+    path: '/MyCreate',
+    name: 'MyCreate',
+    component: () => import('@/views/mine/my_create'),
+  },
 ]

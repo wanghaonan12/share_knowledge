@@ -1,5 +1,5 @@
-import { post, get } from 'utils/request.js'
-import { CONTENT } from '@/api/url_spllic'
+import { post, get, postFile } from 'utils/request.js'
+import { USER, CONTENT } from '@/api/url_spllic'
 
 //地址
 export let getAllArticleApi = CONTENT + 'article/findArticle'
@@ -8,7 +8,79 @@ export let createBrowsApi = CONTENT + 'brows/createOrUpdate'
 export let getArticleByTagApi = CONTENT + 'article/getByTagId'
 export let getArticleDetailApi = CONTENT + 'article/getDetail'
 export let createHistoryApi = CONTENT + 'brows/createOrUpdate'
+export let praiseCreateApi = USER + 'praise/create'
+export let deleteArticleApi = CONTENT + 'article/delete'
+export let createAnswerApi = CONTENT + 'answer/createOrUpdate'
+export let createDiscussApi = USER + 'discuss/createOrUpdate'
+export let getDiscussApi = USER + 'discuss/get'
+
 // export let createBrowsApi = CONTENT + '/brows/createOrUpdate'
+
+/**
+ * 添加评论
+ * @param {*} params
+ * @returns
+ */
+export const getDiscuss = (params) => {
+  return new Promise((resolve, reject) => {
+    post(getDiscussApi, params)
+      .then((res) => {
+        resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+/**
+ * 添加评论
+ * @param {*} params
+ * @returns
+ */
+export const createDiscuss = (params) => {
+  return new Promise((resolve, reject) => {
+    post(createDiscussApi, params)
+      .then((res) => {
+        resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+/**
+ * 添加回答
+ * @param {*} params
+ * @returns
+ */
+export const createAnswer = (params) => {
+  return new Promise((resolve, reject) => {
+    postFile(createAnswerApi, params)
+      .then((res) => {
+        resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+/**
+ * 删除文章
+ * @param {*} params
+ * @returns
+ */
+export const deleteArticle = (params) => {
+  return new Promise((resolve, reject) => {
+    post(deleteArticleApi, params)
+      .then((res) => {
+        resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+
 /**
  * 获取文章
  * @param {*} params
@@ -79,6 +151,23 @@ export const getArticleByTag = (params) => {
 }
 /**
  * 根据文章id获取文章详情
+ * @param String
+ * @returns
+ */
+export const praiseCreate = (params) => {
+  return new Promise((resolve, reject) => {
+    get(praiseCreateApi, params)
+      .then((res) => {
+        resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+
+/**
+ * 文章点赞
  * @param String
  * @returns
  */

@@ -31,11 +31,12 @@
       v-for="(data,index) in artticleData"
       :key="index"
       :title="data.title"
-      :accessory-url="data.sendUserAvatar"
+      :send-user-avatar="data.sendUserAvatar"
       :article-tag-id="tageData[data.articleTagId].classify"
       :create-time="data.createTime"
       :price="data.praiseCount"
       :article-id="data.id"
+      :content="data.content"
       @click="goDetail()"
     ></ShowCard>
 

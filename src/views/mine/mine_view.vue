@@ -145,6 +145,7 @@ export default {
         { icon: '\ue69b', discription: '浏览历史', content: '', click: () => { this.$router.push({ name: 'HistoryView' }) } },
         { icon: '\ue603', discription: '积分详情', content: '', click: () => { this.$router.push({ name: 'RechangeRecord' }) } },
         { icon: '\ue603', discription: '我的点赞', content: '', click: () => { this.$router.push({ name: 'PraisHistory' }) } },
+        { icon: '\ue603', discription: '我的创建', content: '', click: () => { this.$router.push({ name: 'MyCreate' }) } },
         { icon: '\ue642', discription: '修改密码', content: '', click: () => { this.showPopupPassWord = true } },
         { icon: '\ue603', discription: '修改昵称', content: '', click: () => { this.showPopupNickame = true } },
         { icon: '\ue603', discription: '年纪', content: '', click: () => { this.showPopupAge = true } },
@@ -203,10 +204,10 @@ export default {
     getInfo () {
       getUserInfo(this.$store.state.login.userId).then((res) => {
         this.infor = res
-        this.showTab[4]['content'] = res['name']
-        this.showTab[5]['content'] = res['age'] + ''
-        this.showTab[6]['content'] = res['sex']
-        this.showTab[7]['content'] = res['bonus'] + ''
+        this.showTab[5]['content'] = res['name']
+        this.showTab[6]['content'] = res['age'] + ''
+        this.showTab[7]['content'] = res['sex']
+        this.showTab[8]['content'] = res['bonus'] + ''
       }).catch((err) => {
         this.$message.error(err)
       })

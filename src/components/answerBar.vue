@@ -9,11 +9,11 @@
         @click="showBottom=true"
       />
       <van-icon
-        :class="favorite ? 'iconfont box__iconfont favorite red' :'iconfont box__iconfont favorite' "
         class-prefix='icon'
+        :class="!favorite ? 'iconfont box__iconfont favorite red' :'iconfont box__iconfont favorite' "
         size="25"
         name='favorite'
-        @click="praise"
+        @click="click"
       />
     </div>
 
@@ -21,9 +21,41 @@
       <van-button
         round
         color="#3497fb"
+        @click="showAnswer=true"
       >我来回答</van-button>
     </div>
+    <!-- 回答 -->
+    <van-popup
+      v-model:show="showAnswer"
+      round
+      closeable
+      close-icon-position="top-left"
+      position="bottom"
+      class="box--popup"
+      style="padding: 50px 20px 0px 20px;"
+    >
+      <van-field
+        v-model="content"
+        rows="10"
+        type="textarea"
+        placeholder="请输入内容描述"
+      />
+      <!-- 文件选择器 -->
+      <van-uploader
+        v-model="uploader"
+        multiple
+        :max-count="1"
+      >
+      </van-uploader>
+      <el-button
+        class="button"
+        @click="sent"
+      >
+        <div style="padding:0px 125px;">发布</div>
+      </el-button>
+    </van-popup>
 
+    <!-- 评论 -->
     <van-popup
       v-model:show="showBottom"
       round
@@ -32,28 +64,32 @@
       position="bottom"
       class="box--popup"
     >
-      <div class="box--popup__pl"> 评论:(20)</div>
+      <div class="box--popup__pl"> 评论:</div>
       <div style="margin-bottom: 50px">
-        <comment-card></comment-card>
-        <comment-card></comment-card>
-        <comment-card></comment-card>
-        <comment-card></comment-card>
-        <comment-card></comment-card>
-        <comment-card></comment-card>
-        <comment-card></comment-card>
-        <comment-card></comment-card>
+        <div
+          v-for="(value,index) in showDiscuss"
+          :key="index"
+        >
+          <comment-card
+            :content="value['content']"
+            :avatar-url="value['avatar'] "
+            :nickname="value['userId']"
+          ></comment-card>
+
+        </div>
       </div>
 
       <div class="box--popup__input">
         <van-cell-group inset>
           <van-field
-            v-model="value"
+            v-model="discussValue"
             placeholder="抢占沙发"
           >
             <template #button>
               <van-button
                 size="small"
                 type="primary"
+                @click="discuss"
               >评论</van-button>
             </template>
           </van-field>
@@ -69,29 +105,70 @@ import {
   Button as VanButton,
   Popup as VanPopup,
   CellGroup as VanCellGroup,
-  Field as VanField
+  Field as VanField,
+  Uploader as VanUploader
 } from 'vant';
 import '@/assets/icons/iconfont.css';
+import { createAnswer, createDiscuss, getDiscuss } from 'api/home'
 import commentCard from "@/components/commentCard.vue";
 
 export default {
   name: "AnswerBar",
-  components: { VanIcon, VanButton, VanPopup, commentCard, VanCellGroup, VanField },
+  components: { VanUploader, VanIcon, VanButton, VanPopup, commentCard, VanCellGroup, VanField },
   props: {
     favorite: {
-      type: String,
-
+      type: Boolean,
+    },
+    click: {
+      type: Function,
+    },
+    articleId: {
+      type: String
     }
   },
   data () {
     return {
       showBottom: false,
-      value: ''
+      showAnswer: false,
+      discussValue: '',
+      content: '',
+      uploader: [],
+      showDiscuss: [],
+      getDiscussData: {
+        "articleId": this.articleId,
+        "pageNum": 1,
+        "pageSize": 10
+      }
     }
   },
+  created () {
+    this.getDiscuss()
+  },
   methods: {
-    praise () {
-      console.log('点赞');
+    // 回答
+    sent () {
+      const data = { "articleId": this.articleId, "content": this.content, "file": this.uploader.length > 0 ? this.uploader[0]['file'] : null }
+      createAnswer(data).then((res) => { this.$message.success(res) }).catch((err) => { this.$message.error(err) })
+    },
+    // 评论
+    discuss () {
+      const data = { "articleId": this.articleId, "commentDetails": this.discussValue }
+      if (this.discussValue.length > 0 && this.discussValue.length < 200) {
+        createDiscuss(data).then((res) => {
+          this.$message.success(res)
+          this.getDiscuss()
+          this.discussValue = ''
+        }).catch((err) => { this.$message.error(err) })
+      } else {
+        this.$message.error('评论字控制在在0到200之间,如有需要可以多次评论！')
+      }
+
+
+    },
+    // 获取评论
+    getDiscuss () {
+      getDiscuss(this.getDiscussData).then((res) => { this.showDiscuss = res }).catch((err) => { this.$message.error(err) })
+
     }
   }
 }

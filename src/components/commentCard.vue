@@ -3,14 +3,16 @@
   <div class="main">
     <div class="box">
       <div class="box__avatar">
-        <van-image round
-                   width="50px"
-                   height="50px"
-                   :src=avatarUrl></van-image>
+        <van-image
+          round
+          width="50px"
+          height="50px"
+          :src=avatarUrl
+        ></van-image>
       </div>
       <div class="box--content">
         <div class="box--content__nickname">
-          {{avatar}}
+          {{nickname}}
         </div>
         <div class="box--content__comment">
           {{ content }}
@@ -25,24 +27,24 @@
 </template>
 
 <script>
-import {Image as VanImage} from 'vant';
+import { Image as VanImage } from 'vant';
 
 export default {
   name: "AnswerBar",
-  components: {VanImage},
-  props:{
-    avatarUrl:{
-      type:String,
-      default:"https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
+  components: { VanImage },
+  props: {
+    avatarUrl: {
+      type: String,
+      default: "https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
     },
-    content:{
-      type:String
+    content: {
+      type: String
     },
-    nickname:{
-      type:String
+    nickname: {
+      type: String
     },
-    dataTime:{
-      type:String
+    dataTime: {
+      type: String
     }
   }
 }
@@ -52,6 +54,7 @@ export default {
 @import '@/assets/styles/globalVariable.scss';
 
 .main {
+  width: 100%;
   padding-left: 2%;
   padding-right: 2%;
   margin-bottom: 10px;
@@ -71,24 +74,30 @@ export default {
   }
 
   &--content {
+    margin-top: 5px;
     display: flex;
     flex-direction: column;
-    text-indent: 0rem;
+    align-content: start;
+    // text-indent: 0rem;
 
     &__nickname {
-      font-size: 20px;
+      align-self: start;
+      font-size: 16px;
       font-weight: bold;
       margin-bottom: 10px;
     }
 
     &__comment {
+      overflow: hidden;
+      word-wrap: break-word;
+      width: 300px;
+      text-align: left;
       font-size: 15px;
     }
 
     &__data {
       font-size: 10px;
       color: $c4;
-      margin-top: 10px;
     }
   }
 }

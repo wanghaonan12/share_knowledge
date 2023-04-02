@@ -9,6 +9,7 @@ export let UpdataApi = USER + 'user/update'
 export let HistoryApi = CONTENT + 'brows/getByUserId'
 export let AliPayApi = USER + 'alipay/pay'
 export let BonusDetailApi = USER + 'bounds/details'
+export let GetPraiselApi = CONTENT + 'article/findPraiseArticle'
 /**
  * 获取文章
  * @param {*} params
@@ -34,6 +35,23 @@ export const getUserInfo = (params) => {
 export const getHistory = (params) => {
   return new Promise((resolve, reject) => {
     get(HistoryApi, params)
+      .then((res) => {
+        resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+
+/**
+ * 获取点赞文章
+ * @param {*} params
+ * @returns
+ */
+export const GetPraisel = (params) => {
+  return new Promise((resolve, reject) => {
+    post(GetPraiselApi, params)
       .then((res) => {
         resolve(res)
       })

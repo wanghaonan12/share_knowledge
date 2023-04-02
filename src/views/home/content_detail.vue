@@ -1,10 +1,28 @@
 <template>
   <div class="box">
     <!-- navBar -->
-    <navBar title=""></navBar>
+    <navBar
+      :title="showTitle"
+      :show-right="showRight"
+      :right-icon="rightIcon"
+      :on-click-right="deleteFunc"
+    ></navBar>
     <!-- title -->
     <div class="box__title">
-      {{ showTitle }}
+      <van-image
+        round
+        width="26px"
+        height="26px"
+        :src="data['sendUserAvatar']"
+      />
+      <div style="margin-left: 15px;">
+        <div class="name">
+          {{ data['sendUserName'] }}
+        </div>
+        <div class="title">
+          {{ showTitle }}
+        </div>
+      </div>
     </div>
     <!--    tab-->
     <div class="box--type">
@@ -21,21 +39,27 @@
     ></content-card>
     <div class="box__comment">
     </div>
-    <answer-bar />
+    <answer-bar
+      :favorite="data['praiseEnabled']"
+      :click="praise"
+      :article-id="articleId"
+    />
   </div>
 </template>
 <script>
 import navBar from '@/components/global/navBar.vue';
 import answerBar from "@/components/answerBar.vue";
-import { Tag as vanTag } from 'vant';
+import { Tag as vanTag, Image as VanImage } from 'vant';
 import contentCard from "@/components/contentCard.vue";
-import { getArticleDetail, createHistory } from 'api/home.js'
+import { getArticleDetail, createHistory, praiseCreate, deleteArticle } from 'api/home.js'
 
 export default {
   name: 'ContentDetail',
-  components: { navBar, answerBar, vanTag, contentCard },
+  components: { navBar, answerBar, vanTag, contentCard, VanImage },
   data () {
     return {
+      rightIcon: '\ue67e',
+      data: '',
       content: '',
       showTitle: '',
       articleId: '',
@@ -44,7 +68,12 @@ export default {
       imgs: []
     }
   },
-  computed: {},
+  computed: {
+    showRight () {
+      return this.$store.state.login.userId == this.data['userId']
+
+    }
+  },
   created () {
     // 路由取值
     this.articleId = this.$route.query.articleId
@@ -54,8 +83,25 @@ export default {
   },
 
   methods: {
+    // 删除文章
+    deleteFunc () {
+      deleteArticle([this.data['id']]).then((res) => {
+        this.$message.success(res)
+        this.$router.back()
+      }).catch((err) => { this.$message.error(err) })
+    },
+    //点赞
+    praise () {
+      praiseCreate({ 'articleId': this.data['id'] }).then((res) => {
+        this.$message.success(res)
+        this.getDetail()
+      }).catch((err) => { this.$message.error(err) })
+
+    },
+    // 获取详情
     getDetail () {
       getArticleDetail({ "id": this.articleId }).then((res) => {
+        this.data = res
         this.showTitle = res['title']
         this.imgs = []
         this.content = res['content']
@@ -105,7 +151,16 @@ export default {
     font-weight: bold;
     margin: 10px 5px;
     text-align: start;
-    text-indent: 2em;
+    display: flex;
+    .name {
+      font-size: 12px;
+      color: $c8;
+      margin-bottom: 5px;
+    }
+    .title {
+      font-size: 18px;
+      color: $c4;
+    }
   }
 
   &__image {

@@ -1,7 +1,7 @@
 <!-- 充值记录列表 -->
 <template>
   <div class="box">
-    <navBar title=""></navBar>
+    <navBar title="积分详情"></navBar>
     <div
       v-for=" ( key ,index) in data"
       :key="index"

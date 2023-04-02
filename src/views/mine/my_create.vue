@@ -1,7 +1,7 @@
 <!-- 历史记录列表 -->
 <template>
   <div class="box">
-    <navBar title="点赞列表"></navBar>
+    <navBar title="我的创建"></navBar>
     <ShowCard
       v-for="(data,index) in artticleData"
       :key="index"
@@ -16,18 +16,19 @@
   </div>
 </template>
 <script>
-import { GetPraisel } from 'api/mine'
+import { getAllArticle } from 'api/home'
 import { getTageAll } from 'api/tag'
 import ShowCard from '@/components/showCard.vue'
 import navBar from '@/components/global/navBar.vue'
 export default {
-  name: 'HistoryView',
+  name: 'MyCreate',
   components: { navBar, ShowCard },
   data () {
     return {
       artticleData: [],
       tageData: [],
       pageQuery: {
+        myCreate: true,
         pageNum: 1,
         pageSize: 10
       }
@@ -54,7 +55,7 @@ export default {
       })
     },
     historyData () {
-      GetPraisel(this.pageQuery).then((res) => {
+      getAllArticle(this.pageQuery).then((res) => {
         this.artticleData = res.data
         console.log(this.artticleData);
       })

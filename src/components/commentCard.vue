@@ -12,23 +12,32 @@
       </div>
       <div class="box--content">
         <div class="box--content__nickname">
-          {{nickname}}
-        </div>
-        <div class="box--content__comment">
-          {{ content }}
+          <div class="name">
+            {{nickname}}
+          </div>
+          <div
+            :v-if="showDelete(userId)"
+            class=" iconfont icon-delete icon"
+            @click="deleteDisc"
+          ></div>
         </div>
         <div class="box--content__data">
           {{dataTime}}
         </div>
+        <div class="box--content__comment">
+          {{ content }}
+        </div>
+
       </div>
     </div>
+
     <div class="divider"></div>
   </div>
 </template>
 
 <script>
 import { Image as VanImage } from 'vant';
-
+import { DeleteDiscuss } from 'api/home'
 export default {
   name: "AnswerBar",
   components: { VanImage },
@@ -45,6 +54,35 @@ export default {
     },
     dataTime: {
       type: String
+    },
+    refresh: {
+      type: Function
+    },
+    discussId: {
+      type: Number
+    },
+    userId: {
+      type: String
+    },
+    name: {
+      type: String
+    }
+  },
+  created () {
+    this.getRoler()
+  },
+  methods: {
+    // 个更新管理状态
+    getRoler () {
+      this.$store.dispatch("getRoler")
+    },
+    // 判断是否
+    showDelete (userId) {
+      return this.$store.state.login.roler == 'admin' || userId == this.$store.state.login.userId
+    },
+    // 评论删除
+    deleteDisc () {
+      DeleteDiscuss([this.discussId]).then(() => { this.refresh() })
     }
   }
 }
@@ -58,6 +96,7 @@ export default {
   padding-left: 2%;
   padding-right: 2%;
   margin-bottom: 10px;
+  display: flex;
 }
 
 .divider {
@@ -81,10 +120,17 @@ export default {
     // text-indent: 0rem;
 
     &__nickname {
+      width: 100%;
       align-self: start;
       font-size: 16px;
       font-weight: bold;
       margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      .icon {
+        margin-right: 10px;
+        color: $wd-danger;
+      }
     }
 
     &__comment {
@@ -96,6 +142,8 @@ export default {
     }
 
     &__data {
+      margin-bottom: 5px;
+      align-self: flex-start;
       font-size: 10px;
       color: $c4;
     }

@@ -1,25 +1,76 @@
 <template>
   <div class="tabBar">
     <div
-      v-for="(item, index) in tableBarData"
+      v-for="(item, index) in list"
       :key="index"
       class="tabBar__item"
     >
       <router-link :to="{ name: item.routername }">
         <div :class=" $route.name==item.routername ? 'tabBar__item--icon iconfont active' : 'tabBar__item--icon iconfont no_active' ">{{ item.iconfont }}</div>
-        <div :class=" $route.name==item.routername ?'tabBar__item--title active':'tabBar__item--title no_active' ">{{ item.message }}</div>
+        <div :class="$route.name=='' ?  $route.name==item.routername ?'tabBar__item--title active':'tabBar__item--title no_active':$route.name==item.routername ?'tabBar__item--title active':'tabBar__item--title no_active' ">{{ item.message }}</div>
       </router-link>
     </div>
   </div>
 </template>
 <script>
 
-
+import store from '@/store'
 export default {
   name: 'CeateView',
   data () {
     return {
-      tableBarData: [
+      // tableBarData: [
+      //   {
+      //     message: '首页',
+      //     iconfont: '\ue600',
+      //     routername: 'HomeView',
+      //   },
+      //   {
+      //     message: '发布',
+      //     iconfont: '\ue85a',
+      //     routername: 'CreateView',
+      //   },
+      //   {
+      //     message: '通知',
+      //     iconfont: '\ue63e',
+      //     routername: 'NoticeView',
+      //   },
+      //   {
+      //     message: '我的',
+      //     iconfont: '\ue679',
+      //     routername: 'MineView',
+      //   },
+      // ],
+    }
+  },
+  computed: {
+    list: () => {
+      return store.state.login.roler == 'admin' ? [
+        {
+          message: '首页',
+          iconfont: '\ue600',
+          routername: 'HomeView',
+        },
+        {
+          message: '发布',
+          iconfont: '\ue85a',
+          routername: 'CreateView',
+        }, {
+          message: '管理',
+          iconfont: '\ue85a',
+          routername: 'TagView',
+        },
+        {
+          message: '通知',
+          iconfont: '\ue63e',
+          routername: 'NoticeView',
+        },
+        {
+          message: '我的',
+          iconfont: '\ue679',
+          routername: 'MineView',
+        },
+      ] : [
         {
           message: '首页',
           iconfont: '\ue600',
@@ -40,7 +91,7 @@ export default {
           iconfont: '\ue679',
           routername: 'MineView',
         },
-      ],
+      ]
     }
   },
 }

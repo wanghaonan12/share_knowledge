@@ -44,7 +44,7 @@
       <van-uploader
         v-model="uploader"
         multiple
-        :max-count="1"
+        :max-count="3"
       >
       </van-uploader>
       <el-button
@@ -71,9 +71,13 @@
           :key="index"
         >
           <comment-card
-            :content="value['content']"
+            :data-time="value['create_time']"
+            :user-id="value['user_id']"
+            :discuss-id="value['id']"
+            :content="value['comment_details']"
             :avatar-url="value['avatar'] "
-            :nickname="value['userId']"
+            :nickname="value['name']"
+            :refresh="getDiscuss"
           ></comment-card>
 
         </div>
@@ -111,7 +115,6 @@ import {
 import '@/assets/icons/iconfont.css';
 import { createAnswer, createDiscuss, getDiscuss } from 'api/home'
 import commentCard from "@/components/commentCard.vue";
-
 export default {
   name: "AnswerBar",
   components: { VanUploader, VanIcon, VanButton, VanPopup, commentCard, VanCellGroup, VanField },
@@ -124,6 +127,9 @@ export default {
     },
     articleId: {
       type: String
+    },
+    getAnswer: {
+      type: Function,
     }
   },
   data () {
@@ -147,28 +153,35 @@ export default {
   methods: {
     // 回答
     sent () {
-      const data = { "articleId": this.articleId, "content": this.content, "file": this.uploader.length > 0 ? this.uploader[0]['file'] : null }
-      createAnswer(data).then((res) => { this.$message.success(res) }).catch((err) => { this.$message.error(err) })
+      const file = []
+      this.uploader.forEach((lodar) => {
+        file.push(lodar['file'])
+      })
+      const data = { "articleId": this.articleId, "content": this.content, "file": file }
+      if (this.content.length > 0) {
+        createAnswer(data).then(() => {
+          this.getAnswer()
+          this.content = ''
+          this.uploader = []
+          this.showAnswer = false
+        }).catch((err) => { this.$message.error(err) })
+      }
     },
     // 评论
     discuss () {
       const data = { "articleId": this.articleId, "commentDetails": this.discussValue }
       if (this.discussValue.length > 0 && this.discussValue.length < 200) {
-        createDiscuss(data).then((res) => {
-          this.$message.success(res)
+        createDiscuss(data).then(() => {
           this.getDiscuss()
           this.discussValue = ''
         }).catch((err) => { this.$message.error(err) })
       } else {
         this.$message.error('评论字控制在在0到200之间,如有需要可以多次评论！')
       }
-
-
     },
     // 获取评论
     getDiscuss () {
       getDiscuss(this.getDiscussData).then((res) => { this.showDiscuss = res }).catch((err) => { this.$message.error(err) })
-
     }
   }
 }

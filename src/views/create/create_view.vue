@@ -139,7 +139,17 @@ export default {
         });
       }
 
-      createArticle(this.data).then((res) => { this.$message.success(res) }).catch((err) => { this.$message.error(err) })
+      createArticle(this.data).then(() => {
+        this.data = {
+          'articleTagId': '',
+          'award': '0',
+          'content': '',
+          'title': '',
+          'share': 'true',
+          'imageFile': []
+        }
+        this.$router.replace({ path: '/HomeView' })
+      }).catch((err) => { this.$message.error(err) })
     },
     // 获取标签
     getTage () {

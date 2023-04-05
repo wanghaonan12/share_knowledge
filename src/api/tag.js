@@ -46,7 +46,7 @@ export const createTage = (params) => {
  */
 export const deleteTage = (path) => {
   return new Promise((resolve, reject) => {
-    del(deleteTageApi + path)
+    post(deleteTageApi + path)
       .then((res) => {
         resolve(res)
       })

@@ -9,9 +9,28 @@ export let UpdataApi = USER + 'user/update'
 export let HistoryApi = CONTENT + 'brows/getByUserId'
 export let AliPayApi = USER + 'alipay/pay'
 export let BonusDetailApi = USER + 'bounds/details'
+export let getUserApi = USER + 'user/getAll'
+export let setUserRolerApi = USER + 'user/setRoles'
 export let GetPraiselApi = CONTENT + 'article/findPraiseArticle'
+
 /**
- * 获取文章
+ * 设置用户权限角
+ * @param {*} params
+ * @returns
+ */
+export const setUserRoler = (params) => {
+  return new Promise((resolve, reject) => {
+    post(setUserRolerApi, params)
+      .then((res) => {
+        resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+/**
+ * 用户信息
  * @param {*} params
  * @returns
  */
@@ -52,6 +71,23 @@ export const getHistory = (params) => {
 export const GetPraisel = (params) => {
   return new Promise((resolve, reject) => {
     post(GetPraiselApi, params)
+      .then((res) => {
+        resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+
+/**
+ * 获取所有用户
+ * @param {*} params
+ * @returns
+ */
+export const getUser = (params) => {
+  return new Promise((resolve, reject) => {
+    post(getUserApi, params)
       .then((res) => {
         resolve(res)
       })

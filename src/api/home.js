@@ -1,4 +1,4 @@
-import { post, get, postFile } from 'utils/request.js'
+import { post, get, postFile, del } from 'utils/request.js'
 import { USER, CONTENT } from '@/api/url_spllic'
 
 //地址
@@ -13,11 +13,63 @@ export let deleteArticleApi = CONTENT + 'article/delete'
 export let createAnswerApi = CONTENT + 'answer/createOrUpdate'
 export let createDiscussApi = USER + 'discuss/createOrUpdate'
 export let getDiscussApi = USER + 'discuss/get'
+export let getAuswerApi = CONTENT + 'answer/get/'
+export let AcceptAnswerApi = CONTENT + 'answer/accept'
+export let DeleteAnswerApi = CONTENT + 'answer/delete'
+export let DeleteDiscussApi = USER + 'discuss/delete'
 
 // export let createBrowsApi = CONTENT + '/brows/createOrUpdate'
 
 /**
- * 添加评论
+ * 删除评论
+ * @param {*} params
+ * @returns
+ */
+export const DeleteDiscuss = (params) => {
+  return new Promise((resolve, reject) => {
+    post(DeleteDiscussApi, params)
+      .then((res) => {
+        resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+/**
+ * 删除回答
+ * @param {*} params
+ * @returns
+ */
+export const DeleteAnswer = (params) => {
+  return new Promise((resolve, reject) => {
+    post(DeleteAnswerApi, params)
+      .then((res) => {
+        resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+/**
+ * 采用回答
+ * @param {*} params
+ * @returns
+ */
+export const AcceptAnswer = (params) => {
+  return new Promise((resolve, reject) => {
+    post(AcceptAnswerApi, params)
+      .then((res) => {
+        resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+/**
+ * 获取评论
  * @param {*} params
  * @returns
  */
@@ -157,6 +209,23 @@ export const getArticleByTag = (params) => {
 export const praiseCreate = (params) => {
   return new Promise((resolve, reject) => {
     get(praiseCreateApi, params)
+      .then((res) => {
+        resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+
+/**
+ * 根据文章id获取文章详情
+ * @param String
+ * @returns
+ */
+export const getAuswer = (params) => {
+  return new Promise((resolve, reject) => {
+    get(getAuswerApi + params)
       .then((res) => {
         resolve(res)
       })

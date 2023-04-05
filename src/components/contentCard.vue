@@ -6,16 +6,9 @@
       {{ content }}
     </div>
     <!--    图片-->
-    <img
-      v-for="src in imgs"
-      :key="src.title"
-      class="box__image"
-      :src="src.url"
-      :preview="src.preview"
-      :preview-text="src.title"
-    >
+    <imageStyle :imgs="imgs" />
     <!--    视频-->
-    <div v-show="videoUrl.length>0">
+    <!-- <div v-show="videoUrl.length>0">
       <vue-core-video-player
         :src="videoUrl"
         autoplay
@@ -24,16 +17,17 @@
         cancelable=true
         @seeked="updataTime"
       />
-    </div>
+    </div> -->
 
   </div>
 </template>
 
 
 <script>
+import imageStyle from './global/imageStyle.vue';
 export default {
   name: "ContentCard",
-  components: {},
+  components: { imageStyle },
   props: {
     // [
     //   {

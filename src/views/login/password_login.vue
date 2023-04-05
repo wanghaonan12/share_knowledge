@@ -36,7 +36,6 @@ export default {
   },
   methods: {
     login () {
-      console.log(this.form);
       this.$store.dispatch('loginByPassword', this.form)
     },
   }

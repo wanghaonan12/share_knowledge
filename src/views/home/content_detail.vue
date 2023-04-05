@@ -3,7 +3,7 @@
     <!-- navBar -->
     <navBar
       :title="showTitle"
-      :show-right="showRight"
+      :show-right="showDelete(data['userId'])"
       :right-icon="rightIcon"
       :on-click-right="deleteFunc"
     ></navBar>
@@ -35,27 +35,51 @@
     <content-card
       :content="content"
       :imgs=imgs
-      :video-url=videoUrl
     ></content-card>
-    <div class="box__comment">
+    <div class="box--comment">
+      --回答内容--
     </div>
+    <div
+      v-for="(value,index) in answercontent"
+      :key="index"
+      :v-if="answercontent.length > 0"
+    >
+      <answerCard
+        :refresh="getAdopt"
+        :article-id="value['article_id']"
+        :user-id="value['user_id']"
+        :answer-id="value['id']"
+        :content="value['content']"
+        :imgs="value['picture']"
+        :date="value['create_time']"
+        :nickname="value['name']"
+        :send-user-avatar="value['avatar']"
+        :show-accept="value['purchaseEnable']"
+        :show-delete="showDelete(value['user_id'])"
+        :video-url=videoUrl
+      />
+    </div>
+
     <answer-bar
+      :get-answer="getAdopt"
       :favorite="data['praiseEnabled']"
       :click="praise"
       :article-id="articleId"
     />
+
   </div>
 </template>
 <script>
+import answerCard from '@/components/answerCard.vue';
 import navBar from '@/components/global/navBar.vue';
 import answerBar from "@/components/answerBar.vue";
 import { Tag as vanTag, Image as VanImage } from 'vant';
 import contentCard from "@/components/contentCard.vue";
-import { getArticleDetail, createHistory, praiseCreate, deleteArticle } from 'api/home.js'
+import { getArticleDetail, createHistory, praiseCreate, deleteArticle, getAuswer } from 'api/home.js'
 
 export default {
   name: 'ContentDetail',
-  components: { navBar, answerBar, vanTag, contentCard, VanImage },
+  components: { navBar, answerBar, vanTag, contentCard, VanImage, answerCard },
   data () {
     return {
       rightIcon: '\ue67e',
@@ -64,15 +88,15 @@ export default {
       showTitle: '',
       articleId: '',
       articleTag: '',
-      videoUrl: '',
-      imgs: []
+      imgs: [],
+      answercontent: []
     }
   },
   computed: {
     showRight () {
       return this.$store.state.login.userId == this.data['userId']
+    },
 
-    }
   },
   created () {
     // 路由取值
@@ -80,6 +104,8 @@ export default {
     this.articleTag = this.$route.query.articleTagId
     this.getDetail()
     this.addHistory()
+    this.getAdopt()
+    this.getRoler()
   },
 
   methods: {
@@ -115,11 +141,37 @@ export default {
         this.videoUrl = res['videoUrls'].length > 1 ? res['videoUrls'][0] : ''
       }).catch((err) => { this.$message.error(err) })
     },
+    // 获取回答内容
+    getAdopt () {
+      getAuswer(this.articleId).then((res) => {
+        res.forEach(r => {
+          const answerImgs = []
+          r['picture'].forEach(element => {
+            answerImgs.push({
+              url: element['imageUrl'],
+              title: element['imageName'],
+              preview: '1'
+            })
+            r['picture'] = answerImgs
+          });
+        })
+        this.answercontent = res
+      }).catch((err) => { console.log(err); })
+    },
+    // 添加浏览历史
     addHistory () {
       createHistory({ "articleId": this.articleId })
-        .then((res) => { console.log(res); })
         .catch((err) => { this.$message.error(err) })
+    },
+    // 个更新管理状态
+    getRoler () {
+      this.$store.dispatch("getRoler")
+    },
+    // 判断是否
+    showDelete (userId) {
+      return this.$store.state.login.roler == 'admin' || userId == this.$store.state.login.userId
     }
+
   }
 }
 </script>
@@ -167,11 +219,11 @@ export default {
     padding-bottom: 5px;
   }
 
-  &__comment {
+  &--comment {
     display: inline-block;
-    text-align: start;
+    text-align: center;
     padding: 15px 0px;
-    font-size: 15px;
+    font-size: 20px;
   }
 }
 

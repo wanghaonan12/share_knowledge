@@ -48,7 +48,7 @@ import TabBar from '@/components/global/tabbar.vue'
 import ShowCard from '@/components/showCard.vue'
 import { Icon as VanIcon } from 'vant';
 import { getAllArticle } from 'api/home'
-import { getTageAll } from 'api/tag'
+import { GetJoinForum } from 'api/tag'
 // import {}
 export default {
   name: 'HomeView',
@@ -95,7 +95,7 @@ export default {
     },
     // 获取标签
     getTage () {
-      getTageAll().then((res) => {
+      GetJoinForum().then((res) => {
         let all = {
           classify: "all",
           content: null,

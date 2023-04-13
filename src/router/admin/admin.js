@@ -6,7 +6,7 @@ export default [
     children: [
       {
         path: '/',
-        redirect: '/TagView',
+        redirect: '/ManagementUser',
       },
       {
         path: '/TagView',

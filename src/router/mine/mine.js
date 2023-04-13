@@ -24,4 +24,9 @@ export default [
     name: 'MyCreate',
     component: () => import('@/views/mine/my_create'),
   },
+  {
+    path: '/ApplyForView',
+    name: 'ApplyForView',
+    component: () => import('@/views/mine/applyFor_view'),
+  },
 ]

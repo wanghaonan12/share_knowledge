@@ -1,4 +1,4 @@
-import { setItem, getItem, removeAllItem } from '@/utils/storage'
+import { setItem, getItem, removeItem } from '@/utils/storage'
 import { TOKEN, UserId, ROLER } from '@/constant'
 import { loginUrl } from 'api/login.js'
 import { getUserInfo } from '@/api/mine'
@@ -49,7 +49,9 @@ export default {
       context.commit('setUserId', '')
       context.commit('setRoler', '')
       router.replace({ path: '/PasswordLogin' })
-      removeAllItem()
+      removeItem('userId')
+      removeItem('token')
+      removeItem('roler')
     },
     getRoler(context) {
       getUserInfo(context.state.userId).then((res) => {

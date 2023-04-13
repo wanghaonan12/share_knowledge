@@ -143,14 +143,15 @@ export default {
       // 列表渲染数据
       showTab: [
         { icon: '\ue69b', discription: '浏览历史', content: '', click: () => { this.$router.push({ name: 'HistoryView' }) } },
-        { icon: '\ue603', discription: '积分详情', content: '', click: () => { this.$router.push({ name: 'RechangeRecord' }) } },
-        { icon: '\ue603', discription: '我的点赞', content: '', click: () => { this.$router.push({ name: 'PraisHistory' }) } },
-        { icon: '\ue603', discription: '我的创建', content: '', click: () => { this.$router.push({ name: 'MyCreate' }) } },
-        { icon: '\ue642', discription: '修改密码', content: '', click: () => { this.showPopupPassWord = true } },
-        { icon: '\ue603', discription: '修改昵称', content: '', click: () => { this.showPopupNickame = true } },
-        { icon: '\ue603', discription: '年纪', content: '', click: () => { this.showPopupAge = true } },
-        { icon: '\ue603', discription: '性别', content: '', click: () => { this.show = true } },
+        { icon: '\ue612', discription: '积分详情', content: '', click: () => { this.$router.push({ name: 'RechangeRecord' }) } },
+        { icon: '\ue651', discription: '我的点赞', content: '', click: () => { this.$router.push({ name: 'PraisHistory' }) } },
+        { icon: '\ue614', discription: '我的创建', content: '', click: () => { this.$router.push({ name: 'MyCreate' }) } },
+        { icon: '\ue638', discription: '修改密码', content: '', click: () => { this.showPopupPassWord = true } },
+        { icon: '\ue615', discription: '修改昵称', content: '', click: () => { this.showPopupNickame = true } },
+        { icon: '\ue617', discription: '年纪', content: '', click: () => { this.showPopupAge = true } },
+        { icon: '\ue642', discription: '性别', content: '', click: () => { this.show = true } },
         { icon: '\ue603', discription: '积分', content: '', click: () => { this.alipayShow = true } },
+        { icon: '\ue603', discription: '权限申请', content: '', click: () => { this.$router.push({ name: 'ApplyForView' }) } },
       ],
       actions: [
         { name: '女', value: '0' },
@@ -219,6 +220,7 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/styles/globalVariable.scss';
 .box {
+  margin-bottom: 60px;
   .infor {
     margin-bottom: 10px;
     padding: 25px;

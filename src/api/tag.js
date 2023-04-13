@@ -1,11 +1,26 @@
 import { del, get, post } from 'utils/request.js'
-import { CONTENT } from '@/api/url_spllic'
+import { CONTENT, USER } from '@/api/url_spllic'
 
 //地址
 export let getTageAllApi = CONTENT + 'article_tage/get'
 export let createTageApi = CONTENT + 'article_tage/create'
 export let deleteTageApi = CONTENT + 'article_tage/delete/'
-
+export let GetJoinForumApi = USER + 'user/getJoinForum'
+/**
+ * 获取文章分类
+ * @returns
+ */
+export const GetJoinForum = () => {
+  return new Promise((resolve, reject) => {
+    get(GetJoinForumApi)
+      .then((res) => {
+        resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
 /**
  * 获取文章分类
  * @returns

@@ -57,8 +57,8 @@ export default {
           routername: 'CreateView',
         }, {
           message: '管理',
-          iconfont: '\ue85a',
-          routername: 'TagView',
+          iconfont: '\ueb3c',
+          routername: 'ManagementView',
         },
         {
           message: '通知',

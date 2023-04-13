@@ -19,7 +19,6 @@ export let DeleteAnswerApi = CONTENT + 'answer/delete'
 export let DeleteDiscussApi = USER + 'discuss/delete'
 
 // export let createBrowsApi = CONTENT + '/brows/createOrUpdate'
-
 /**
  * 删除评论
  * @param {*} params

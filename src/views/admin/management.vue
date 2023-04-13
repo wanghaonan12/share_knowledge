@@ -5,13 +5,14 @@
       v-model:active="active"
     >
       <van-tab
-        title="标签管理"
-        :to="{name:'TagView'}"
-      ></van-tab>
-      <van-tab
         title="用户管理"
         :to="{name:'ManagementUser'}"
       ></van-tab>
+      <van-tab
+        title="标签管理"
+        :to="{name:'TagView'}"
+      ></van-tab>
+
     </van-tabs>
     <router-view />
     <tab-bar></tab-bar>

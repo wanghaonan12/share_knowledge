@@ -8,16 +8,22 @@
     <div
       v-for="(value,index) in noticeData"
       :key="index"
-      @click="enShow(index)"
     >
-      <noticeListVue
-        :index="index"
-        :content="value['content']"
-        :create-time="value['date']"
-        :nickname="value['nickname']"
-        :show-point="value['showPoint']"
-        :send-user-avatar="value['avatar']"
-      />
+      <div @click="enShow(index)">
+        <noticeListVue
+          :article-tag-id="value['articleTagId']"
+          :species="value['species']"
+          :user-id="value['userId']"
+          :article-tag-name="value['articleTagName']"
+          :index="index"
+          :content="value['content']"
+          :create-time="value['date']"
+          :nickname="value['nickname']"
+          :show-point="value['showPoint']"
+          :send-user-avatar="value['avatar']"
+          @delete-manage="deleteManage"
+        />
+      </div>
     </div>
 
     <TabBar></TabBar>
@@ -48,16 +54,30 @@ export default {
       this.noticeData = getItem("notice")
     },
     getConfigResult (res) {
-      // 添加是否点击的属性
-      res['showPoint'] = true
-      this.noticeData.push(res)
-      console.log(this.noticeData);
-      setItem("notice", this.noticeData)
+      if ('' == res['species']) {
+        // 通知信息处理
+        // 添加是否点击的属性
+        res['showPoint'] = true
+        this.noticeData.push(res)
+        setItem("notice", this.noticeData)
+      } else {
+
+        res['showPoint'] = true
+        this.noticeData.push(res)
+        console.log(this.noticeData, 'noticel');
+        setItem("notice", this.noticeData)
+      }
+
     },
     enShow (index) {
-      console.log(index);
       this.noticeData[index]['showPoint'] = false
       setItem("notice", this.noticeData)
+    },
+    // 删除已经解决的事件
+    deleteManage (index) {
+      console.log(index);
+      // this.noticeData.splice(index, 1)
+      // setItem("notice", this.noticeData)
     }
   }
 }

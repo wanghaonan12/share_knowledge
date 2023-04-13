@@ -29,16 +29,30 @@
       class="popup"
       round
       :style="{ }"
-    >{{ content }}</van-popup>
+    >{{ content }}
+      <div class="applyForButton">
+        <VanButton
+          type="danger"
+          @click="refuse()"
+        >拒接</VanButton>
+        <VanButton
+          color="#7db6bf"
+          @click="applyFor()"
+        >同意</VanButton>
+      </div>
+
+    </van-popup>
   </div>
 </template>
 <script>
 import { Image as VanImage } from 'vant';
 import { Popup as VanPopup } from 'vant';
-
+import { Button as VanButton } from 'vant';
+import { setUserRoler, JoinForum } from '@/api/mine';
+import { createTage } from '@/api/tag';
 export default {
   name: 'MineView',
-  components: { VanImage, VanPopup },
+  components: { VanImage, VanPopup, VanButton },
   props: {
     sendUserAvatar: {
       type: String,
@@ -64,8 +78,22 @@ export default {
       type: Function,
       default: () => {
       }
-    }
+    },
+    articleTagId: {
+      type: String
+    },
+    articleTagName: {
+      type: String
+    },
+    species: {
+      type: String,
+      default: ''
+    },
+    userId: {
+      type: String
+    },
   },
+  emits: ['deleteManage'],
   data () {
     return {
       showAward: false
@@ -75,7 +103,46 @@ export default {
     show () {
       this.showAward = true;
       this.click()
-
+    },
+    refuse () {
+      this.socketApi.sendSock({ "to": this.userId, "content": '管理员拒绝了你的申请' })
+      this.$emit('deleteManage', this.index)
+    },
+    applyFor () {
+      console.log(this.species);
+      switch (this.species) {
+        // 申请加入的处理
+        case 'applyForJoin':
+          JoinForum({ 'articleTagId': this.articleTagId, 'userId': this.userId }).then((res) => {
+            this.$emit('deleteManage', this.index)
+            this.$message.success(res)
+            this.socketApi.sendSock({ "to": this.userId, "content": '已经同意加入' + this.articleTagName })
+          }).catch((err) => {
+            this.$message.error(err)
+          })
+          break;
+        // 申请管理员的处理
+        case 'applyForAdmin':
+          setUserRoler({ "userId": this.userId, "roles": this.articleTagId }).then((res) => {
+            this.$emit('deleteManage', this.index)
+            this.$message.success(res)
+            this.socketApi.sendSock({ "to": this.userId, "content": '已经同意成为' + this.articleTagName + '的管理员' })
+          }).catch((err) => {
+            this.$message.error(err)
+          })
+          break;
+        // 申请创建社区的处理
+        case 'applyForCreate':
+          console.log("3");
+          createTage({ "classify": this.articleTagName }).then((res) => {
+            this.$emit('deleteManage', this.index)
+            this.$message.success(res)
+            this.socketApi.sendSock({ "to": this.userId, "content": '已经同意创建标签' + this.articleTagName })
+          }).catch((err) => {
+            this.$message.error(err)
+          })
+          break;
+      }
     }
   }
 }
@@ -151,5 +218,11 @@ export default {
   height: 8px;
   background-color: $wd_danger;
   border-radius: 4px;
+}
+
+.applyForButton {
+  padding: 5px 10px;
+  display: flex;
+  justify-content: space-between;
 }
 </style>

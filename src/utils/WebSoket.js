@@ -1,5 +1,5 @@
 import store from '@/store'
-
+import { setItem, getItem, removeItem } from '@/utils/storage'
 var websock = null
 let rec //断线重连后，延迟5秒重新创建WebSocket连接  rec用来存储延迟请求的代码
 let isConnect = false //连接标识 避免重复连接
@@ -99,7 +99,6 @@ function getSock(callback) {
 
 // 数据接收
 function websocketonmessage(e) {
-  // console.log(e.data)
   let O_o = JSON.parse(decodeUnicode(e.data))
 
   if (!O_o) {
@@ -108,8 +107,9 @@ function websocketonmessage(e) {
     if (O_o.msg == 'open success') {
       sessionStorage.setItem('wid', O_o.wid)
     } else {
-      // console.log(O_o);
-      globalCallback(O_o)
+      let notice = getItem('notice') ? getItem('notice') : []
+      notice.push(O_o)
+      setItem('notice', notice)
     }
   }
 
@@ -128,7 +128,6 @@ function websocketonmessage(e) {
 
 // 数据发送
 function websocketsend(agentData) {
-  console.log(JSON.stringify(agentData))
   websock.send(JSON.stringify(agentData))
 }
 

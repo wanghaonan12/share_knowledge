@@ -3,7 +3,7 @@
     <!-- navBar -->
     <navBar
       :title="showTitle"
-      :show-right="showDelete(data['userId'])"
+      :show-right="data['deleteEnable']"
       :right-icon="rightIcon"
       :on-click-right="deleteFunc"
     ></navBar>
@@ -56,7 +56,6 @@
         :send-user-avatar="value['avatar']"
         :show-accept="value['purchaseEnable']"
         :show-delete="showDelete(value['user_id'])"
-        :video-url=videoUrl
       />
     </div>
 
@@ -112,14 +111,12 @@ export default {
     // 删除文章
     deleteFunc () {
       deleteArticle([this.data['id']]).then((res) => {
-        this.$message.success(res)
         this.$router.back()
       }).catch((err) => { this.$message.error(err) })
     },
     //点赞
     praise () {
       praiseCreate({ 'articleId': this.data['id'] }).then((res) => {
-        this.$message.success(res)
         this.getDetail()
       }).catch((err) => { this.$message.error(err) })
 

@@ -6,6 +6,55 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "777843",
+      "name": "赞",
+      "font_class": "icon",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "5387719",
+      "name": "快递员管理",
+      "font_class": "kuaidiyuanguanli",
+      "unicode": "eb3c",
+      "unicode_decimal": 60220
+    },
+    {
+      "icon_id": "6403479",
+      "name": "agent",
+      "font_class": "agent",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "6446243",
+      "name": "密码（开）",
+      "font_class": "tianchongxing-",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    },
+    {
+      "icon_id": "9851607",
+      "name": "积分详情",
+      "font_class": "jifenxiangqing",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "12732490",
+      "name": "创建",
+      "font_class": "chuangjian",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "31084184",
+      "name": "修改昵称",
+      "font_class": "xiugainicheng",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
       "icon_id": "248953",
       "name": "delete",
       "font_class": "delete",

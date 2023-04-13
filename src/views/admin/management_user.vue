@@ -1,45 +1,34 @@
 
 <template>
   <div class="box">
-
     <div
-      v-for="(value ,index) in userList"
+      v-for="(value,index) in userList"
       :key="index"
     >
-      <van-cell
-        :value="value['roles']"
-        is-link
-        @click="show(value['id'])"
-      >
-        <!-- 使用 title 插槽来自定义标题 -->
-        <template #title>
-          <div style="display: flex;">
-            <van-image
-              width="30"
-              height="30"
-              :src="value['avatar']"
-            />
-            <span style="margin-left: 10px;">{{ value['name'] }}</span>
-          </div>
-        </template>
-      </van-cell>
-      <van-action-sheet
-        v-model:show="showClassifyAcrion"
-        :actions="showData"
-        @select="onSelect"
+      <authority
+        :is-super-admin="isSuperAdmin"
+        :avatar="value['avatar']"
+        :opition="value['managementTables']"
+        :nickname="value['name']"
+        :roler="value['roles']"
+        :user-id="value['id']"
+        :join-table="value['joinForums']"
       />
     </div>
+
   </div>
 </template>
 <script>
-import { getUser, setUserRoler } from 'api/mine'
-import { Cell as VanCell, Image as VanImage, ActionSheet as VanActionSheet } from 'vant';
+import { getUser, setUserRoler, getAllUserAndManagement } from 'api/mine'
+// import { Cell as VanCell, Image as VanImage, ActionSheet as VanActionSheet } from 'vant';
 
+import authority from '@/components/authority.vue'
 export default {
   name: 'ManagementUser',
-  components: { VanCell, VanImage, VanActionSheet },
+  components: { authority },
   data () {
     return {
+
       showClassifyAcrion: false,
       showData: [
         { name: '管理员', value: '1' },
@@ -48,12 +37,33 @@ export default {
       ],
       index: 0,
       userList: [],
+      pageQuuery: {
+        "id": "",
+        "name": "",
+        "roles": ""
+      }
+    }
+  },
+  computed: {
+    isSuperAdmin () {
+      return this.$store.state.login.userId == '79c308ea630d4e6f8d647e8278962bea'
     }
   },
   created () {
-    this.getAll()
+    // this.getAll()
+    this.getAllUserManagement()
   },
   methods: {
+    // 获取用户和权限
+    getAllUserManagement () {
+      this.pageQuuery.roles = this.isSuperAdmin ? '' : 'user'
+      getAllUserAndManagement(this.pageQuuery).then((res) => {
+        console.log(res);
+        this.userList = res
+      }).catch((err) => {
+        this.$message.error(err)
+      })
+    },
     // 展示用权限
     show (index) {
       this.showClassifyAcrion = true;
@@ -72,14 +82,15 @@ export default {
         this.$message.error(err)
       })
     },
-    // 获取用户列表
-    getAll () {
-      getUser().then((res) => {
-        this.userList = res
-      }).catch((err) => {
-        this.$message.error(err)
-      })
-    },
+
+    // // 获取用户列表
+    // getAll () {
+    //   getUser().then((res) => {
+    //     this.userList = res
+    //   }).catch((err) => {
+    //     this.$message.error(err)
+    //   })
+    // },
 
 
   }

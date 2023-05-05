@@ -23,6 +23,10 @@
           {{ showTitle }}
         </div>
       </div>
+
+      <div class="award">
+        积分奖励： {{data['award']}}
+      </div>
     </div>
     <!--    tab-->
     <div class="box--type">
@@ -75,7 +79,6 @@ import answerBar from "@/components/answerBar.vue";
 import { Tag as vanTag, Image as VanImage } from 'vant';
 import contentCard from "@/components/contentCard.vue";
 import { getArticleDetail, createHistory, praiseCreate, deleteArticle, getAuswer } from 'api/home.js'
-
 export default {
   name: 'ContentDetail',
   components: { navBar, answerBar, vanTag, contentCard, VanImage, answerCard },
@@ -108,6 +111,7 @@ export default {
   },
 
   methods: {
+
     // 删除文章
     deleteFunc () {
       deleteArticle([this.data['id']]).then((res) => {
@@ -209,6 +213,11 @@ export default {
     .title {
       font-size: 18px;
       color: $c4;
+    }
+    .award {
+      margin-left: 90px;
+      font-size: 10px;
+      color: $wd-success;
     }
   }
 

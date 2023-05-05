@@ -2,10 +2,11 @@ export default [
   {
     path: '/ManagementView',
     name: 'ManagementView',
+    redirect: '/ManagementUser',
     component: () => import('@/views/admin/management'),
     children: [
       {
-        path: '/',
+        path: '/ManagementView',
         redirect: '/ManagementUser',
       },
       {

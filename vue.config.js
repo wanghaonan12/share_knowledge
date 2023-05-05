@@ -7,6 +7,8 @@ module.exports = defineConfig({
     /* 自动打开浏览器 */
     open: true,
     port: 8066,
+    // host: '43.138.25.182',
+    // host: '192.168.0.103',
     host: 'localhost',
   },
   transpileDependencies: true,

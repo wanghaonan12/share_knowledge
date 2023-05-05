@@ -245,7 +245,7 @@ export const BonusDetail = (params) => {
  * @returns
  */
 export const AliPay = (total) => {
-  // window.location.href = BASEURL + AliPayApi + '/' + total + '/' + store.state.login.userId
-  window.location.href =
-    'http://ggjzm8.natappfree.cc' + AliPayApi + '/' + total + '/' + store.state.login.userId
+  window.location.href = BASEURL + AliPayApi + '/' + total + '/' + store.state.login.userId
+  // window.location.href =
+  //   'http://ggjzm8.natappfree.cc' + AliPayApi + '/' + total + '/' + store.state.login.userId
 }

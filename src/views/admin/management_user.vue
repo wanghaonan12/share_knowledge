@@ -19,7 +19,7 @@
   </div>
 </template>
 <script>
-import { getUser, setUserRoler, getAllUserAndManagement } from 'api/mine'
+import { setUserRoler, getAllUserAndManagement } from 'api/mine'
 // import { Cell as VanCell, Image as VanImage, ActionSheet as VanActionSheet } from 'vant';
 
 import authority from '@/components/authority.vue'
